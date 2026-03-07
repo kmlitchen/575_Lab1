@@ -25,11 +25,16 @@ function getData(){
 function createMap(){
     map = L.map('map', {
         center: [40, -100],
-        zoom: 4
+        zoom: 4,
+        zoomControl: false
     });
     // add OSM base tilelayer
     L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+    }).addTo(map);
+    // move the zoom control loc
+    L.control.zoom({
+        position: 'topright' // Options: 'topleft', 'topright', 'bottomleft', 'bottomright'
     }).addTo(map);
     // call getData function to load the GeoJSON data
     getData(map);
@@ -96,7 +101,7 @@ function pointToLayer(feature, latlng, attributes){
     var attribute = attributes[0];
     // marker options
     var geojsonMarkerOptions = {
-        radius: 8,
+        radius: 3,
         fillColor: "#0084ffd7",
         color: "#383737",
         weight: 1,
@@ -158,7 +163,7 @@ function createSequenceControls(attributes){
             // new control container div + class name
             var container = L.DomUtil.create('div', 'sequence-control-container');
             // make a new range input element (slider-bar)
-            container.insertAdjacentHTML('beforeend', '<input class="range-slider" type="range">')
+            container.insertAdjacentHTML('beforeend', '<p> <b> Scheduled Services in <span class="year">2000</span></p> <input class="range-slider" type="range">')
             // add png icons as skip buttons to container
             container.insertAdjacentHTML('beforeend', '<button class="step" id="reverse" title="backward"><img src="img/backward.png"></button>'); // Arrow by Ghiyats Mujtaba
             container.insertAdjacentHTML('beforeend', '<button class="step" id="forward" title="forward"><img src="img/forward.png"></button>'); // Arrow by Ghiyats Mujtaba
@@ -208,7 +213,7 @@ function createLegend(attributes) {
         // make a new temporal legend 
         container.innerHTML = '<p class="temporalLegend">Scheduled Services in <span class="year">2000</span></p>';
         // start svg string for content
-        var svg = '<svg id="attribute-legend" width="160px" height="60px">';
+        var svg = '<svg id="attribute-legend">';
         // new array for looping through values from stats calc fx
         var circles = ["max", "mean", "min"];
         // loop through the array, for ea 
@@ -219,11 +224,11 @@ function createLegend(attributes) {
             var cy = 55 - radius;
             console.log(cy);
         // update svg string 
-            svg += '<circle class="legend-circle" id="' + circles[i] + '" r="' + radius + '"cy="' + cy + '" fill="#0084ffd7" opacity="0.8" stroke="#000000" cx="35"/>';  // cx to change <-> pos of circle mkrs
+            svg += '<circle class="legend-circle" id="' + circles[i] + '" r="' + radius + '"cy="' + cy + '" fill="#0084ffd7" opacity="0.8" stroke="#000000" cx="50"/>';  // cx to change <-> pos of circle mkrs
             // evenly space out labels            
-            var textY = i * 20 + 20;            
+            var textY = i * 20 + 15;            
             // add legend text to svg string            
-            svg += '<text id="' + circles[i] + '-text" x="65" y="' + textY + '">' + Math.round(stats[circles[i]]*100)/100 + " million" + '</text>';
+            svg += '<text id="' + circles[i] + '-text" x="80" y="' + textY + '">' + Math.round(stats[circles[i]]*100)/100 + " million" + '</text>';
         };
         // after loop, close svg string
         svg += "</svg>";
