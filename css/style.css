@@ -1,7 +1,10 @@
+
+/* map styles: */
 /* map height */
-#map { height: 550px; 
-    width: 100%;
-    display: inline-block;
+#map { 
+    height: 450px; 
+    width: 95%;
+    margin: auto;
     }
 
 .leaflet-popup-content-wrapper {
@@ -62,4 +65,15 @@ input[type="range"] {
 /* margin size in popups */
 .leaflet-popup-content p {
     margin: 0.2em 0;
+}
+
+/* non-map styles: */
+
+.header {
+    margin: auto;
+    text-align: center;
+}
+.generic{
+    margin: auto;
+    text-align: center;
 }

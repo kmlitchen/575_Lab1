@@ -24,7 +24,7 @@ function getData(){
 // fx to initiate Leaflet map:
 function createMap(){
     map = L.map('map', {
-        center: [40, -100],
+        center: [38, -100],
         zoom: 4,
         zoomControl: false
     });
