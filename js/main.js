@@ -70,9 +70,7 @@ function calcStats(data){
     }
     // get min/max value from array
     stats.min = Math.min(...allValues)
-    console.log(stats.min)
     stats.max = Math.max(...allValues)
-    console.log(stats.max)
     // calc mean value from array
     var sum = allValues.reduce(function (a, b) {
     return a + b;
@@ -148,7 +146,8 @@ function updatePropSymbols(attribute){
         };
     });
     // update temporal legend
-    document.querySelector("span.year").innerHTML = attribute; 
+    document.querySelector("span.year").innerHTML = attribute;  
+    document.querySelector("span.year2").innerHTML = attribute;
 };
 
 // fx for slider bar:
@@ -163,7 +162,7 @@ function createSequenceControls(attributes){
             // new control container div + class name
             var container = L.DomUtil.create('div', 'sequence-control-container');
             // make a new range input element (slider-bar)
-            container.insertAdjacentHTML('beforeend', '<p> <b> Scheduled Services in <span class="year">2000</span></p> <input class="range-slider" type="range">')
+            container.insertAdjacentHTML('beforeend', '<p> <b> Scheduled Services in <span class="year2">2000</span></p> <input class="range-slider" type="range">')
             // add png icons as skip buttons to container
             container.insertAdjacentHTML('beforeend', '<button class="step" id="reverse" title="backward"><img src="img/backward.png"></button>'); // Arrow by Ghiyats Mujtaba
             container.insertAdjacentHTML('beforeend', '<button class="step" id="forward" title="forward"><img src="img/forward.png"></button>'); // Arrow by Ghiyats Mujtaba
@@ -182,6 +181,7 @@ function createSequenceControls(attributes){
     // internal fx to move slider <--> increment by button w/ circular looping
     var steps = document.querySelectorAll('.step');
     steps.forEach(function(step){
+        // event listener for clicking buttons
         step.addEventListener("click", function(){
             var index = document.querySelector('.range-slider').value;
             if (step.id == 'forward'){  // forward button goes forward; highest -> back to 0
@@ -196,6 +196,11 @@ function createSequenceControls(attributes){
             // call update symbol fx by attribute of current step index pos
             updatePropSymbols(attributes[index]);
         })
+        // event listener for dragging
+        document.querySelector('.range-slider').addEventListener('input', function(){
+        var index = this.value;
+        updatePropSymbols(attributes[index]);
+  });
     })
 };
 
@@ -220,15 +225,13 @@ function createLegend(attributes) {
         for (var i = 0; i < circles.length; i++) {
         // calculate radius (r) and center (cy)
             var radius = calcPropRadius(stats[circles[i]]);
-            console.log(radius);
             var cy = 55 - radius;
-            console.log(cy);
         // update svg string 
-            svg += '<circle class="legend-circle" id="' + circles[i] + '" r="' + radius + '"cy="' + cy + '" fill="#0084ffd7" opacity="0.8" stroke="#000000" cx="50"/>';  // cx to change <-> pos of circle mkrs
+            svg += '<circle class="legend-circle" id="' + circles[i] + '" r="' + radius + '"cy="' + cy + '" fill="#0084ffd7" opacity="0.8" stroke="#000000" cx="45"/>';  // cx to change <-> pos of circle mkrs
             // evenly space out labels            
             var textY = i * 20 + 15;            
             // add legend text to svg string            
-            svg += '<text id="' + circles[i] + '-text" x="80" y="' + textY + '">' + Math.round(stats[circles[i]]*100)/100 + " million" + '</text>';
+            svg += '<text id="' + circles[i] + '-text" x="85" y="' + textY + '">' + Math.round(stats[circles[i]]*100)/100 + " million" + '</text>';
         };
         // after loop, close svg string
         svg += "</svg>";
