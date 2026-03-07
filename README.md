@@ -1,2 +1,5 @@
-# GEOG 575 Activity 6 Repo - 
-This repo continues unit 2 w/ leaflet tutorials and lab 1 data, scaling proportional symbols and adding interactive operators
+# GEOG 575 Lab 1 Repo - 
+This repo concludess unit 2 with the glorious realization of the Lab 1 Leaflet slippy map!
+Data aggregated from quarterly U.S. International Air Passenger and Freight Statistics Reports of scheduled services at the top 15 U.S. Passenger Gateways to the World. 
+
+Uses Javascript and the Leaflet.js mapping library to assemble, load, and dynamically scale a spatiotemporal information set in the GeoJSON format as proportional symbols. Implement operator primitives, including pan, zoom, retrieve, and sequence to your heart's content. 
