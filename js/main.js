@@ -69,13 +69,13 @@ function calcStats(data){
         }
     }
     // get min/max value from array
-    stats.min = Math.min(...allValues)
-    stats.max = Math.max(...allValues)
+    stats.min = Math.min(...allValues).toFixed(1) // rounded these to 1 dp
+    stats.max = Math.max(...allValues).toFixed(1)
     // calc mean value from array
     var sum = allValues.reduce(function (a, b) {
     return a + b;
     });
-    stats.mean = sum / allValues.length;
+    stats.mean = (sum / allValues.length).toFixed(1);
 };
 
 // fx to calc radius of ea proportional symbol:
@@ -164,8 +164,8 @@ function createSequenceControls(attributes){
             // make a new range input element (slider-bar)
             container.insertAdjacentHTML('beforeend', '<p> <b> Scheduled Services in <span class="year2">2000</span></p> <input class="range-slider" type="range">')
             // add png icons as skip buttons to container
-            container.insertAdjacentHTML('beforeend', '<button class="step" id="reverse" title="backward"><img src="img/backward.png"></button>'); // Arrow by Ghiyats Mujtaba
-            container.insertAdjacentHTML('beforeend', '<button class="step" id="forward" title="forward"><img src="img/forward.png"></button>'); // Arrow by Ghiyats Mujtaba
+            container.insertAdjacentHTML('beforeend', '<button class="step" id="reverse" title="backward"><img src="img/backward.png"></button>'); // Arrow by Ghiyats Mujtaba, the Noun Project
+            container.insertAdjacentHTML('beforeend', '<button class="step" id="forward" title="forward"><img src="img/forward.png"></button>'); // Arrow by Ghiyats Mujtaba, the Noun Project
             // disable event listeners when clicking within container
             L.DomEvent.disableClickPropagation(container);
             return container;
