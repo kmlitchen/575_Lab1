@@ -34,7 +34,7 @@ function createMap(){
     }).addTo(map);
     // move the zoom control loc
     L.control.zoom({
-        position: 'topright' // Options: 'topleft', 'topright', 'bottomleft', 'bottomright'
+        position: 'topright' 
     }).addTo(map);
     // call getData function to load the GeoJSON data
     getData(map);
