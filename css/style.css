@@ -108,4 +108,5 @@ body {
 }
 .indent{
     margin-left: 2.5%; /*indent the whole div w/ a class */
+    margin-right: 2%;
 }
