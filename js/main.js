@@ -23,15 +23,48 @@ function getData(){
 
 // fx to initiate Leaflet map:
 function createMap(){
+    // base tilelayers:
+    var usgsTopo = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+        maxZoom: 7,
+        minZoom: 4,
+    });
+    var stadiaDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.{ext}', {
+	    attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	    maxZoom: 7, 
+        minZoom: 4,
+        ext: 'png'
+    });
+    var stadiaLite = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}', {
+	    attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 7,
+	    minZoom: 4,
+	    ext: 'png'
+        });
+    var esriNatGeo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	    attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	    maxZoom: 7,
+        minZoom:4
+        });
+    // bounds for max bound setting:
+    var southWest = L.latLng(18, -220);
+    var northEast = L.latLng(65, -30);
+    // map view:
     map = L.map('map', {
         center: [38, -100],
         zoom: 4,
-        zoomControl: false
+        zoomControl: false,
+        maxBounds: L.latLngBounds(southWest, northEast),
+        layers: usgsTopo,
     });
-    // add OSM base tilelayer
-    L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
-    }).addTo(map);
+    // basemaps for the editor widget:
+    var baseMaps = {
+        "Topography": usgsTopo,
+        "NatGeo": esriNatGeo, // this one is ugly imo but i'm not removing it
+        "Dark": stadiaDark,
+        "Light": stadiaLite,
+        };
+    L.control.layers(baseMaps).addTo(map);
     // move the zoom control loc
     L.control.zoom({
         position: 'topright' 
@@ -115,7 +148,7 @@ function pointToLayer(feature, latlng, attributes){
     var popupContent = createPopupContent(feature.properties, attribute);
     // bind popup to marker, offset by radius
     layer.bindPopup(popupContent, {
-        offset: new L.Point(0,-geojsonMarkerOptions.radius) 
+        offset: new L.Point(0,geojsonMarkerOptions.radius/2) 
     });
     return layer;
 };

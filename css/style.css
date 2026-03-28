@@ -64,6 +64,16 @@ input[type="range"] {
 .legend-control-container:active {
     cursor: grabbing; 
 }
+@media (max-width: 600px) {
+    .legend-control-container {
+        top:25%;
+        left: 5%;
+        right: unset;
+        width: auto;
+        max-width: 60%;
+        position:fixed
+    }
+}
 
 /* pop-up style: */
 .leaflet-popup-content-wrapper {
@@ -71,6 +81,9 @@ input[type="range"] {
 }
 .leaflet-popup-content p {
     margin: 0.2em 0;
+}
+.leaflet-popup-tip {
+    background-color: #f5f5dcd7;
 }
 
 /* zoom-control style: */
@@ -83,7 +96,7 @@ input[type="range"] {
 
 /***** non-map content: *****/
 body {
-  background-color: #e5f5dcde; /* background of whole page*/
+  background-color: #e7f3e0b0; /* background of whole page*/
 }
 .header {
     margin: auto;
